@@ -1,0 +1,129 @@
+<svg width="1024" height="640" viewBox="0 0 1024 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="640" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F8FBFD"/>
+      <stop offset="0.55" stop-color="#EAF4EF"/>
+      <stop offset="1" stop-color="#CDE9B8"/>
+    </linearGradient>
+    <linearGradient id="mist" x1="0" y1="200" x2="0" y2="470" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#C8DEE4" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#C8DEE4" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="softBlur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+
+  <rect width="1024" height="640" fill="url(#sky)"/>
+  <ellipse cx="320" cy="175" rx="230" ry="58" fill="#FFFFFF" opacity="0.55"/>
+  <ellipse cx="760" cy="155" rx="280" ry="64" fill="#FFFFFF" opacity="0.50"/>
+
+  <!-- Auckland skyline silhouette -->
+  <g opacity="0.28" fill="#86A8AF">
+    <rect x="167" y="285" width="70" height="148" rx="8"/>
+    <path d="M178 285h48l-7-28h-34l-7 28z"/>
+    <rect x="290" y="316" width="62" height="117" rx="7"/>
+    <path d="M302 316h38l-8-22h-22l-8 22z"/>
+    <rect x="414" y="275" width="75" height="158" rx="8"/>
+    <path d="M432 275h42l-7-28h-28l-7 28z"/>
+    <rect x="573" y="273" width="80" height="160" rx="8"/>
+    <path d="M587 273h52l-8-37h-36l-8 37z"/>
+    <rect x="724" y="307" width="70" height="126" rx="8"/>
+    <path d="M739 307h40l-7-24h-26l-7 24z"/>
+  </g>
+
+  <!-- Sky Tower inspired silhouette -->
+  <g opacity="0.32" fill="#7FA3AA">
+    <rect x="498" y="108" width="14" height="326" rx="7"/>
+    <rect x="502" y="36" width="6" height="82" rx="3"/>
+    <path d="M469 194h72l-13 36h-46l-13-36z"/>
+    <rect x="481" y="171" width="48" height="28" rx="7"/>
+    <path d="M492 156h26l8 16h-42l8-16z"/>
+  </g>
+
+  <rect y="361" width="1024" height="139" fill="url(#mist)"/>
+
+  <!-- Background trees -->
+  <g opacity="0.75">
+    <circle cx="48" cy="415" r="58" fill="#B6DFAF"/>
+    <circle cx="124" cy="392" r="70" fill="#A9D89E"/>
+    <circle cx="230" cy="427" r="58" fill="#BFE5B5"/>
+    <circle cx="804" cy="402" r="72" fill="#B3DCA4"/>
+    <circle cx="921" cy="386" r="73" fill="#A7D48E"/>
+    <circle cx="1000" cy="427" r="58" fill="#BFE4A9"/>
+  </g>
+
+  <!-- Foreground trees -->
+  <g>
+    <circle cx="99" cy="441" r="78" fill="#69B65A"/>
+    <circle cx="67" cy="421" r="54" fill="#7BC36E"/>
+    <circle cx="133" cy="405" r="51" fill="#5FAE51"/>
+    <circle cx="160" cy="454" r="52" fill="#72BD63"/>
+    <rect x="96" y="454" width="9" height="105" rx="4" fill="#316E3C"/>
+    <path d="M100 490l-28-27M101 511l31-30" stroke="#316E3C" stroke-width="7" stroke-linecap="round"/>
+
+    <circle cx="862" cy="436" r="72" fill="#61AE51"/>
+    <circle cx="828" cy="421" r="48" fill="#77C166"/>
+    <circle cx="901" cy="410" r="49" fill="#559F47"/>
+    <rect x="858" y="452" width="9" height="96" rx="4" fill="#2E6937"/>
+    <path d="M862 486l-27-25M864 506l28-31" stroke="#2E6937" stroke-width="7" stroke-linecap="round"/>
+  </g>
+
+  <!-- Houses -->
+  <g>
+    <rect x="282" y="426" width="86" height="82" rx="4" fill="#FFF1C9"/>
+    <path d="M269 429l57-47 56 47H269z" fill="#D9C895"/>
+    <rect x="313" y="466" width="22" height="42" rx="2" fill="#88BE82"/>
+    <rect x="288" y="443" width="18" height="18" fill="#D0E9D4"/>
+    <rect x="344" y="443" width="18" height="18" fill="#D0E9D4"/>
+  </g>
+
+  <g>
+    <rect x="800" y="384" width="128" height="126" rx="5" fill="#F6F2D7"/>
+    <path d="M780 392l86-72 85 72H780z" fill="#4C9B7B"/>
+    <rect x="850" y="456" width="30" height="54" rx="3" fill="#72B46D"/>
+    <rect x="818" y="417" width="26" height="28" fill="#D7EEDD"/>
+    <rect x="885" y="417" width="26" height="28" fill="#D7EEDD"/>
+    <rect x="893" y="356" width="18" height="45" fill="#4C9B7B"/>
+  </g>
+
+  <!-- Road -->
+  <rect y="504" width="1024" height="58" fill="#D5DED8"/>
+  <rect y="501" width="1024" height="6" fill="#EEF2EE"/>
+  <rect y="558" width="1024" height="5" fill="#BAC7BF"/>
+  <rect x="20" y="531" width="140" height="4" rx="2" fill="#F7F8F5" opacity="0.75"/>
+  <rect x="238" y="531" width="140" height="4" rx="2" fill="#F7F8F5" opacity="0.75"/>
+  <rect x="646" y="531" width="140" height="4" rx="2" fill="#F7F8F5" opacity="0.75"/>
+  <rect x="856" y="531" width="140" height="4" rx="2" fill="#F7F8F5" opacity="0.75"/>
+
+  <!-- Garbage truck copied/adapted from reference image -->
+  <g transform="translate(360 360) scale(1.9)">
+    <ellipse cx="100" cy="95" rx="90" ry="6" fill="#7B8A7E" opacity="0.22"/>
+    <rect x="50" y="10" width="110" height="70" rx="4" fill="#65A30D"/>
+    <rect x="55" y="15" width="45" height="60" rx="2" fill="#84CC16"/>
+    <rect x="105" y="15" width="50" height="60" rx="2" fill="#84CC16"/>
+    <path d="M58 20h37v50H58V20z" fill="#7CC94E" opacity="0.65"/>
+    <path d="M108 20h42v50h-42V20z" fill="#79C94D" opacity="0.62"/>
+    <polygon points="160,15 190,30 190,80 160,80" fill="#4D7C0F"/>
+    <polygon points="166,24 184,32 184,72 166,72" fill="#5E9C22" opacity="0.55"/>
+    <rect x="160" y="75" width="30" height="5" fill="#F59E0B"/>
+    <rect x="0" y="30" width="45" height="50" rx="8" fill="#65A30D"/>
+    <path d="M6 35h34v45H0V45c0-6 3-10 6-10z" fill="#59A82B" opacity="0.9"/>
+    <polygon points="10,35 35,35 40,55 10,55" fill="#1E293B"/>
+    <polygon points="14,38 32,38 35,52 14,52" fill="#BBD7D2"/>
+    <rect x="40" y="40" width="10" height="40" fill="#3F6212"/>
+    <rect x="-2" y="65" width="8" height="10" rx="1" fill="#FEF08A"/>
+    <rect x="38" y="77" width="126" height="6" fill="#334155" opacity="0.85"/>
+    <circle cx="140" cy="85" r="16" fill="#1E293B"/>
+    <circle cx="140" cy="85" r="8" fill="#CBD5E1"/>
+    <circle cx="140" cy="85" r="4" fill="#64748B"/>
+    <circle cx="20" cy="85" r="16" fill="#1E293B"/>
+    <circle cx="20" cy="85" r="8" fill="#CBD5E1"/>
+    <circle cx="20" cy="85" r="4" fill="#64748B"/>
+    <circle cx="188" cy="78" r="4" fill="#EF4444"/>
+  </g>
+
+  <!-- Grass foreground -->
+  <rect y="563" width="1024" height="77" fill="#A8DB7A"/>
+  <path d="M0 563c141 18 219 18 356 0 142-18 251-17 390 0 107 13 187 14 278 0v77H0v-77z" fill="#9ED36F" opacity="0.45"/>
+</svg>

@@ -1,0 +1,72 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Address search illustration" : {
+      "comment" : "Accessibility label for the decorative Auckland collection truck illustration.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Address search illustration"
+          }
+        }
+      }
+    },
+    "Enter your address to see your collection days." : {
+      "comment" : "Subtitle shown on the address search screen.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your address to see your collection days."
+          }
+        }
+      }
+    },
+    "Find your address" : {
+      "comment" : "Title shown on the address search screen.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find your address"
+          }
+        }
+      }
+    },
+    "Searching addresses..." : {
+      "comment" : "Loading message shown while address search results are fetched.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Searching addresses..."
+          }
+        }
+      }
+    },
+    "Search for your address" : {
+      "comment" : "Placeholder text in the address search field.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search for your address"
+          }
+        }
+      }
+    },
+    "Unable to search addresses. Please try again." : {
+      "comment" : "Error shown when address search fails.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to search addresses. Please try again."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
