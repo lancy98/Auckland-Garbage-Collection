@@ -1,4 +1,4 @@
-# Auckland Garbage Collection
+# <img src="Auckland%20Garbage%20Collection/Assets.xcassets/AppIcon.appiconset/Icon-1024.png" alt="Auckland Garbage Collection app icon" width="36" align="absmiddle" style="border: 1px solid rgba(240, 246, 252, 0.35); border-radius: 22%;"> Auckland Garbage Collection
 
 Auckland Garbage Collection is an iOS app that helps Auckland residents find their next rubbish, recycling, and food scraps collection days. Search for an address, choose the matching property, and see its upcoming collections together in one place.
 
