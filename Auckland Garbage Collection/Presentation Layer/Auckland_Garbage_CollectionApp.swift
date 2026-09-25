@@ -8,11 +8,12 @@
 import SwiftUI
 import FirebaseCore
 import FirebaseAppCheck
+import FirebaseFunctions
 
 @main
 struct Auckland_Garbage_CollectionApp: App {
     init() {
-#if DEBUG
+#if DEBUG && targetEnvironment(simulator)
         AppCheck.setAppCheckProviderFactory(AppCheckDebugProviderFactory())
 #else
         let providerFactory: AppCheckProviderFactory = AGCAppCheckProviderFactory()
@@ -20,6 +21,10 @@ struct Auckland_Garbage_CollectionApp: App {
 #endif
 
         FirebaseApp.configure()
+
+#if DEBUG && targetEnvironment(simulator)
+        Functions.functions().useEmulator(withHost: "localhost", port: 5001)
+#endif
     }
     
     var body: some Scene {

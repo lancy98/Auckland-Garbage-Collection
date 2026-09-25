@@ -1,65 +1,49 @@
-//
-//  AddressSearchView.swift
-//  Auckland Garbage Collection
-//
-//  Created by Lancy Norbert Fernandes on 07/05/26.
-//
-
 import SwiftUI
 
-@MainActor
 struct AddressSearchView: View {
     @State private var viewModel = AddressSearchViewModel()
+    @State private var isSearchPresented = false
+
+    private var query: String {
+        viewModel.searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 
     var body: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 0) {
-                Spacer()
-                    .frame(height: geometry.size.height * 0.1)
-
-                VStack(spacing: 14) {
-                    Text("Find your address")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundStyle(.primary)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.75)
-
-                    Text("Enter your address to see your collection days.")
-                        .font(.title3)
-                        .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(4)
-                        .padding(.horizontal, 28)
+        NavigationStack {
+            List {
+                if !viewModel.results.isEmpty {
+                    Section {
+                        ForEach(viewModel.results) { result in
+                            NavigationLink(value: result) {
+                                AddressResultRow(address: result.address)
+                            }
+                            .accessibilityHint("Show collection days for this address")
+                        }
+                    } header: {
+                        Text("Matching addresses")
+                    } footer: {
+                        Text("Choose an address to see its collection days.")
+                    }
                 }
-
-                HStack(spacing: 12) {
-                    Image(systemName: "magnifyingglass")
-                        .font(.title2)
-                        .foregroundStyle(.secondary)
-
-                    TextField("Search for your address", text: $viewModel.searchText)
-                        .font(.title3)
-                }
-                .padding(.horizontal, 18)
-                .frame(height: 58)
-                .background(
-                    RoundedRectangle(cornerRadius: 13, style: .continuous)
-                        .fill(.background)
-                        .shadow(color: .black.opacity(0.03), radius: 10, x: 0, y: 4)
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 13, style: .continuous)
-                        .stroke(.quaternary, lineWidth: 1)
-                )
-                .padding(.horizontal, 31)
-                .padding(.top, 38)
-
-                contentBelowSearchBar
             }
-            .frame(width: geometry.size.width, height: geometry.size.height)
-            .background(Color(.systemBackground))
+            .listStyle(.insetGrouped)
+            .scrollDismissesKeyboard(.interactively)
+            .overlay {
+                if viewModel.results.isEmpty {
+                    searchStatus
+                }
+            }
+            .navigationTitle("Collections")
+            .searchable(
+                text: $viewModel.searchText,
+                isPresented: $isSearchPresented,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: "Search your address"
+            )
+            .autocorrectionDisabled()
+            .navigationDestination(for: PropertySearchResult.self) { property in
+                BinDatesView(property: property)
+            }
             .task(id: viewModel.searchText) {
                 await viewModel.searchTextDidChange()
             }
@@ -67,85 +51,105 @@ struct AddressSearchView: View {
     }
 
     @ViewBuilder
-    private var contentBelowSearchBar: some View {
-        if viewModel.results.isEmpty && !viewModel.isSearching && viewModel.errorMessage == nil {
-            GeometryReader { imageGeometry in
-                Image("AddressSearchIllustration")
-                    .resizable()
-                    .scaledToFill()
-                    .accessibilityLabel(Text("Address search illustration"))
-                    .frame(
-                        width: imageGeometry.size.width,
-                        height: imageGeometry.size.height,
-                        alignment: .bottom
-                    )
-                    .clipped()
+    private var searchStatus: some View {
+        if query.isEmpty && !isSearchPresented {
+            welcomeContent
+        } else if query.count < 3 {
+            ContentUnavailableView {
+                Label("Find your address", systemImage: "mappin.and.ellipse")
+            } description: {
+                Text("Enter your house number and street name. Use at least three characters.")
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.top, 24)
+        } else if viewModel.isSearching || !viewModel.hasSearched {
+            ProgressView("Searching addresses…")
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else if viewModel.errorMessage != nil {
+            ContentUnavailableView {
+                Label("Unable to search", systemImage: "exclamationmark.circle")
+            } description: {
+                Text("Please try again in a moment.")
+            } actions: {
+                Button("Try Again") {
+                    Task { await viewModel.retrySearch() }
+                }
+                .buttonStyle(.borderedProminent)
+            }
         } else {
-            searchResultsContent
-                .padding(.horizontal, 31)
-                .padding(.top, 12)
-                .padding(.bottom, 24)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            ContentUnavailableView.search(text: query)
         }
     }
 
-    @ViewBuilder
-    private var searchResultsContent: some View {
-        if viewModel.isSearching {
-            HStack(spacing: 10) {
-                ProgressView()
-                Text("Searching addresses...")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                Spacer()
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(resultsBackground)
-        } else if let errorMessage = viewModel.errorMessage {
-            Text(errorMessage)
-                .font(.subheadline)
-                .foregroundStyle(.red)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 12)
-                .background(resultsBackground)
-        } else if !viewModel.results.isEmpty {
-            ScrollView {
-                LazyVStack(spacing: 0) {
-                    ForEach(viewModel.results) { result in
-                        Text(result.address)
-                            .font(.body)
-                            .foregroundStyle(.primary)
-                            .lineLimit(2)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 12)
+    private var welcomeContent: some View {
+        ScrollView {
+            VStack(spacing: 24) {
+                Image(systemName: "calendar.badge.clock")
+                    .font(.system(size: 42, weight: .regular))
+                    .foregroundStyle(.green)
+                    .frame(width: 96, height: 96)
+                    .background(.green.opacity(0.1), in: RoundedRectangle(cornerRadius: 24))
+                    .accessibilityHidden(true)
 
-                        if result.id != viewModel.results.last?.id {
-                            Divider()
-                                .padding(.leading, 16)
-                        }
-                    }
+                VStack(spacing: 10) {
+                    Text("Your next collection,\nat a glance.")
+                        .font(.title2.bold())
+                        .fixedSize(horizontal: false, vertical: true)
+
+                    Text("Find rubbish, recycling and food scraps collection days for your Auckland address.")
+                        .font(.body)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .multilineTextAlignment(.center)
+
+                Button {
+                    isSearchPresented = true
+                } label: {
+                    Text("Find My Address")
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+            }
+            .frame(maxWidth: 340)
+            .padding(.horizontal, 28)
+            .padding(.vertical, 48)
+            .frame(maxWidth: .infinity)
+        }
+    }
+}
+
+private struct AddressResultRow: View {
+    let address: String
+
+    private var addressParts: [String] {
+        address.split(separator: ",", maxSplits: 1).map {
+            $0.trimmingCharacters(in: .whitespaces)
+        }
+    }
+
+    var body: some View {
+        HStack(spacing: 14) {
+            Image(systemName: "mappin.and.ellipse")
+                .font(.title3)
+                .foregroundStyle(.secondary)
+                .frame(width: 24)
+                .accessibilityHidden(true)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(addressParts.first ?? address)
+                    .font(.body.weight(.medium))
+                    .foregroundStyle(.primary)
+                if addressParts.count > 1 {
+                    Text(addressParts[1])
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .background(resultsBackground)
+            .fixedSize(horizontal: false, vertical: true)
         }
-    }
-
-    private var resultsBackground: some View {
-        RoundedRectangle(cornerRadius: 13, style: .continuous)
-            .fill(.background)
-            .shadow(color: .black.opacity(0.04), radius: 10, x: 0, y: 4)
-            .overlay(
-                RoundedRectangle(cornerRadius: 13, style: .continuous)
-                    .stroke(.quaternary, lineWidth: 1)
-            )
+        .padding(.vertical, 8)
+        .accessibilityElement(children: .combine)
     }
 }
 
