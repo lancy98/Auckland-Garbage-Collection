@@ -26,10 +26,10 @@ struct BinDatesView: View {
                         .font(.title2.weight(.semibold))
                         .fixedSize(horizontal: false, vertical: true)
                 }
-                .padding(.vertical, 8)
+                .padding(.vertical, 4)
             }
             .listRowBackground(Color.clear)
-            .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 12, trailing: 0))
+            .listRowInsets(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
 
             if viewModel.collections.isEmpty {
                 collectionStatus
@@ -45,23 +45,43 @@ struct BinDatesView: View {
                 ForEach(collectionDays, id: \.first?.date) { collections in
                     if let first = collections.first {
                         Section {
+                            VStack(alignment: .leading, spacing: 6) {
+                                if first.date == collectionDays.first?.first?.date {
+                                    TimelineView(.periodic(from: .now, by: 60)) { context in
+                                        let relativeDate = relativeDateLabel(
+                                            for: first.collectionDate,
+                                            now: context.date
+                                        )
+
+                                        ViewThatFits(in: .horizontal) {
+                                            HStack(spacing: 12) {
+                                                Text("Next collection")
+                                                    .fixedSize(horizontal: true, vertical: false)
+                                                Spacer(minLength: 0)
+                                                Text(relativeDate)
+                                                    .fixedSize(horizontal: true, vertical: false)
+                                            }
+
+                                            VStack(alignment: .leading, spacing: 4) {
+                                                Text("Next collection")
+                                                Text(relativeDate)
+                                            }
+                                        }
+                                        .foregroundStyle(.secondary)
+                                    }
+                                    .font(.subheadline)
+                                }
+
+                                Text(first.formattedDate)
+                                    .font(.title3.weight(.semibold))
+                                    .foregroundStyle(.primary)
+                            }
+                            .padding(.vertical, 6)
+                            .accessibilityElement(children: .combine)
+
                             ForEach(collections) { collection in
                                 CollectionRow(collection: collection)
                             }
-                        } header: {
-                            VStack(alignment: .leading, spacing: 6) {
-                                if first.date == collectionDays.first?.first?.date {
-                                    Text("Next collection")
-                                        .font(.subheadline)
-                                        .foregroundStyle(Color.secondary)
-                                }
-                                Text(first.formattedDate)
-                                    .font(.title3.weight(.semibold))
-                                    .foregroundStyle(Color.primary)
-                            }
-                            .textCase(nil)
-                            .padding(.bottom, 8)
-                            .accessibilityElement(children: .combine)
                         }
                     }
                 }
@@ -81,6 +101,8 @@ struct BinDatesView: View {
             }
         }
         .listStyle(.insetGrouped)
+        .listSectionSpacing(12)
+        .contentMargins(.top, 0, for: .scrollContent)
         .navigationTitle("Collection days")
         .navigationBarTitleDisplayMode(.inline)
         .refreshable {
@@ -89,6 +111,22 @@ struct BinDatesView: View {
         .task(id: property.id) {
             await viewModel.load(propertyId: property.id)
         }
+    }
+
+    private func relativeDateLabel(for collectionDate: Date, now: Date) -> String {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "Pacific/Auckland") ?? .current
+
+        let days = calendar.dateComponents(
+            [.day],
+            from: calendar.startOfDay(for: now),
+            to: calendar.startOfDay(for: collectionDate)
+        ).day ?? 0
+
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .full
+        formatter.dateTimeStyle = .named
+        return formatter.localizedString(from: DateComponents(day: days))
     }
 
     @ViewBuilder
