@@ -1,6 +1,6 @@
-# <img src="Auckland%20Garbage%20Collection/Assets.xcassets/AppIcon.appiconset/Icon-1024.png" alt="Auckland Garbage Collection app icon" width="36" align="absmiddle" style="border: 1px solid rgba(240, 246, 252, 0.35); border-radius: 22%;"> Auckland Garbage Collection
+# <img src="./README-icon.png" alt="BinDay Auckland app icon" width="36" align="absmiddle"> BinDay Auckland
 
-Auckland Garbage Collection is an iOS app that helps Auckland residents find their next rubbish, recycling, and food scraps collection days. Search for an address, choose the matching property, and see its upcoming collections together in one place.
+BinDay Auckland is an iOS app that helps Auckland residents find their next rubbish, recycling, and food scraps collection days. Search for an address, choose the matching property, and see its upcoming collections together in one place.
 
 The app is built with SwiftUI and uses a separate [Firebase Functions backend](https://github.com/lancy98/auckland-garbage-backend) to retrieve collection information from Auckland Council. This is an independent project, not an official Auckland Council app.
 
