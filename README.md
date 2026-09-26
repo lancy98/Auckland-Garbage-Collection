@@ -42,8 +42,7 @@ Auckland Garbage Collection/
 │   ├── Data Layer/               # Firebase Functions repositories
 │   ├── Assets.xcassets/
 │   └── Localizable.xcstrings
-├── AppStoreScreenshots/
-└── Screenshots/
+└── AppStoreScreenshots/
 ```
 
 ## Architecture
