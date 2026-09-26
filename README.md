@@ -6,9 +6,14 @@ The app is built with SwiftUI and uses a separate [Firebase Functions backend](h
 
 ## Screenshots
 
-| Find your address | Address results | Collection days |
-| :---: | :---: | :---: |
-| <img src="Screenshots/find-address.png" alt="Welcome screen with address search" width="260"> | <img src="Screenshots/address-results.png" alt="Matching Auckland addresses" width="260"> | <img src="Screenshots/collection-days.png" alt="Rubbish, food scraps, and recycling collection dates" width="260"> |
+<p align="center">
+  <img src="AppStoreScreenshots/iPhone-6.5/01-collection-days-light.png" alt="Collection days at a glance" width="300">
+  <img src="AppStoreScreenshots/iPhone-6.5/02-address-search-light.png" alt="Search for an Auckland address" width="300">
+</p>
+<p align="center">
+  <img src="AppStoreScreenshots/iPhone-6.5/03-find-address-light.png" alt="Find your address in BinDay Auckland" width="300">
+  <img src="AppStoreScreenshots/iPhone-6.5/04-collection-days-dark.png" alt="Collection days in dark mode" width="300">
+</p>
 
 ## Features
 
@@ -37,6 +42,7 @@ Auckland Garbage Collection/
 │   ├── Data Layer/               # Firebase Functions repositories
 │   ├── Assets.xcassets/
 │   └── Localizable.xcstrings
+├── AppStoreScreenshots/
 └── Screenshots/
 ```
 
